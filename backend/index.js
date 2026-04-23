@@ -11,18 +11,23 @@ const invoiceRoutes = require('./routes/invoice.route')
 const compression = require('compression');
 
 app.use(compression());
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST"],
+    credentials: true,
+
+}));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/api/user', userRoutes)
 app.use('/api/invoice', invoiceRoutes)
-app.get('/', (req,res)=>{
-    res.send('Hello World ')
+app.get('/', (req, res) => {
+    res.send('server is running')
 })
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`PORT is running on ${PORT}`)
 })
 
